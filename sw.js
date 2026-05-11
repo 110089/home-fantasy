@@ -1,12 +1,26 @@
-// 給這個倉庫取個名字
 const cacheName = 'yuki-pwa-v1';
+const filesToCache = [
+  './',
+  './index.html',
+  './manifest.json',
+  './icon.png' // 確保這張圖真的在 GitHub 裡
+];
 
-// 當管家被安裝時，可以先叫他存一些基本檔案（也可以先留空）
+// 安裝時：把檔案搬進倉庫
 self.addEventListener('install', (e) => {
-  console.log('隱形管家：已經安裝完畢！');
+  e.waitUntil(
+    caches.open(cacheName).then((cache) => {
+      console.log('隱形管家：正在幫妳搬運檔案進倉庫...');
+      return cache.addAll(filesToCache);
+    })
+  );
 });
 
-// 當妳在滑網頁時，管家會幫妳抓取內容
+// 抓取時：如果倉庫有，就拿倉庫的；沒有才去網路上找
 self.addEventListener('fetch', (e) => {
-  // 這裡可以寫怎麼抓快取，目前先讓它正常通過就好
+  e.respondWith(
+    caches.match(e.request).then((response) => {
+      return response || fetch(e.request);
+    })
+  );
 });
