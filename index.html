@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
+	<link rel="manifest" href="manifest.json">
 <meta charset="UTF-8" />
 <title>羽</title>
 <style>
@@ -72,6 +73,11 @@
 
 
 </body>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+</script>
 </html>
 
 
