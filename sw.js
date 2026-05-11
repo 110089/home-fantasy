@@ -3,6 +3,9 @@ const filesToCache = [
   './',
   './index.html',
   './manifest.json',
+  './HDS.html',
+  './HNFT.png',
+  './plan_trips.html',
   './icon.png' // 確保這張圖真的在 GitHub 裡
 ];
 
