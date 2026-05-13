@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
+	<link rel="manifest" href="manifest.json">
 <meta charset="UTF-8" />
 <title>Home Defense System</title>
 <style>
@@ -74,7 +75,11 @@
 	  	<a href="https://kmuedu-my.sharepoint.com/:f:/g/personal/u114006052_live_kmu_edu_tw/IgCMqlW2Im7lTro7yZ6XYMt9AVKlQhVX_MzoF2BAlZySTIc?e=8dNb8n" target="_blank"> 驅動程式</a>
   </div>
 
-
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+</script>
 </body>
 </html>
 
