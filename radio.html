@@ -17,18 +17,24 @@
         }
 
         /* 關鍵修正：讓網頁在電腦上也固定呈現手機般窄窄的精緻大小 */
-         .container {
-        /* 🌟 核心修改： */
-        max-width: 1080px;        /* 在大螢幕上，最大就只會撐到 1080px，不會無限變寬 */
-        width: 95%;               /* 在小螢幕（手機/平板）上，會自動縮小成螢幕寬度的 95%，左右各留一點點安全邊距 */
+        body {
+            /* 🌟 改成 black 或你想要的底色，因為現在 container 會填滿它，這會變成網頁底色 */
+            background-color: black; 
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
         
-        margin: 0 auto;           /* 依然保持在螢幕正中央置中 */
-        background-color: black;  /* 你的黑色內容背景 */
-        padding: 20px;          
-        min-height: 100vh;        /* 垂直拉滿整個螢幕 */
-        box-shadow: 0 0 15px rgba(0,0,0,0.4); 
-        box-sizing: border-box;
-    }
+        .container {
+            /* 🌟 核心修改：徹底拿掉 max-width，直接綁定 100% 寬度 */
+            width: 100%;              /* 100% 完美適應所有螢幕寬度，一丁點縫隙都不留 */
+            background-color: black;  /* 內容區塊背景色 */
+            padding: 20px;          
+            min-height: 100vh;        /* 垂直高度一樣拉滿整個螢幕 */
+            box-sizing: border-box;   /* 確保 padding 不會把 100% 寬度撐爆 */
+            
+            /* 因為已經填滿全螢幕了，陰影（box-shadow）用不到了，可以直接刪除 */
+        }
 
         .video-list {
             margin-bottom: 20px;
