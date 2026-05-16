@@ -3,7 +3,7 @@ const filesToCache = [
   './',
   './R.json',
   './R.html',
-  './icon.png' // 確保這張圖真的在 GitHub 裡
+  './RX F8EH.png' // 確保這張圖真的在 GitHub 裡
 ];
 
 // 安裝時：把檔案搬進倉庫
