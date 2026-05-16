@@ -17,18 +17,18 @@
         }
 
         /* 關鍵修正：讓網頁在電腦上也固定呈現手機般窄窄的精緻大小 */
-        .container {
-            /* 🌟 核心修改： */
-            max-width: 1080px;        /* 在大螢幕上，最大就只會撐到 1080px，不會無限變寬 */
-            width: 95%;               /* 在小螢幕（手機/平板）上，會自動縮小成螢幕寬度的 95%，左右各留一點點安全邊距 */
-            
-            margin: 0 auto;           /* 依然保持在螢幕正中央置中 */
-            background-color: black;  /* 你的黑色內容背景 */
-            padding: 20px;          
-            min-height: 100vh;        /* 垂直拉滿整個螢幕 */
-            box-shadow: 0 0 15px rgba(0,0,0,0.4); 
-            box-sizing: border-box;
-        }
+         .container {
+        /* 🌟 核心修改： */
+        max-width: 1080px;        /* 在大螢幕上，最大就只會撐到 1080px，不會無限變寬 */
+        width: 95%;               /* 在小螢幕（手機/平板）上，會自動縮小成螢幕寬度的 95%，左右各留一點點安全邊距 */
+        
+        margin: 0 auto;           /* 依然保持在螢幕正中央置中 */
+        background-color: black;  /* 你的黑色內容背景 */
+        padding: 20px;          
+        min-height: 100vh;        /* 垂直拉滿整個螢幕 */
+        box-shadow: 0 0 15px rgba(0,0,0,0.4); 
+        box-sizing: border-box;
+    }
 
         .video-list {
             margin-bottom: 20px;
