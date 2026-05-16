@@ -2,7 +2,7 @@ const cacheName = 'yuki-pwa-v1';
 const filesToCache = [
   './',
   './R.json',
-  './R.html',
+  './radio.html',
   './RX F8EH.png' // 確保這張圖真的在 GitHub 裡
 ];
 
