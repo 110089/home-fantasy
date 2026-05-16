@@ -1,6 +1,6 @@
 {
   "name": "網路廣播接收 RX Radio",
-  "start_url": "R.html",
+  "start_url": "radio.html",
   "display": "standalone",
   "icons": [{ "src": "RX F8EH.png", "sizes": "256x256", "type": "image/png" }]
 }
