@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>連線測試</title>
+</head>
+<body>
+    <div id="content">
+        <h2>正在建立安全連線...</h2>
+    </div>
+
+    <script>
+        const gasUrl = "https://script.google.com/macros/s/AKfycbz_tv7KcMuHCOLB75h5ei25PO0db3MIXBtM1OrAV9KfQp1trc7mrytNQMZ2SViGHKOk/exec";
+        const destinationUrl = "https://script.google.com/macros/s/AKfycbz_tv7KcMuHCOLB75h5ei25PO0db3MIXBtM1OrAV9KfQp1trc7mrytNQMZ2SViGHKOk/exec"; // 成功要去的地方
+        const fallbackUrl = "7759.html";     // ❌ 失敗倒數後要去的地方（備用網頁）
+
+
+        // 💡 核心：直接檢查該裝置有沒有網路
+        if (navigator.onLine) {
+            
+            // 1. 有網路，在背景偷偷戳一下 GAS 發送 Webhook (用 no-cors 確保不卡住)
+            fetch(gasUrl, { method: 'GET', mode: 'no-cors' });
+            
+            // 2. 不等它回傳，直接把人接過去目的地
+            document.getElementById("content").innerHTML = "<h2>連線成功！正在導引...</h2>";
+            window.location.href = destinationUrl;
+
+        } else {
+            
+            // ❌ 沒網路：直接進入失敗倒數
+            let failCount = 3;
+            document.getElementById("content").innerHTML = `
+                <h2 style="color: red;">❌ 偵測到裝置處於離線狀態！</h2>
+                <p>將在 <span id="fail-timer" style="font-weight:bold;">3</span> 秒後導引至離線區...</p>
+            `;
+
+            const failCountdown = setInterval(() => {
+                failCount--;
+                document.getElementById("fail-timer").innerText = failCount;
+                if (failCount <= 0) {
+                    clearInterval(failCountdown);
+                    window.location.href = fallbackUrl;
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
