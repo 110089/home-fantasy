@@ -3,6 +3,8 @@ const filesToCache = [
   './',
   './R.json',
   './radio.html',
+  './f7759.html',
+  './7759.html',
   './RX F8EH.png' // 確保這張圖真的在 GitHub 裡
 ];
 
