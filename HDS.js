@@ -3,6 +3,8 @@ const filesToCache = [
   './',
   './HDS.json',
   './HDS.html',
+  './f7759.html',
+  './7759.html',
   './1.png',
   './icon.png' // 確保這張圖真的在 GitHub 裡
 ];
