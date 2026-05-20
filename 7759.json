@@ -1,0 +1,6 @@
+{
+  "name": "Home Defense System",
+  "start_url": "f7759.html",
+  "display": "standalone",
+  "icons": [{ "src": "ico.png", "sizes": "256x256", "type": "image/png" }]
+}
