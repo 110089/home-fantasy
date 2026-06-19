@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <link rel="manifest" href="R.json">
+    <meta charset="UTF-8">
+    <title>電台廣播播放器</title>
+    <!-- 引入播放 M3U8 必備的套件 -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    
+    <style>
+        /* 網頁底色設為灰色 */
+
+        /* 關鍵修正：讓網頁在電腦上也固定呈現手機般窄窄的精緻大小 */
+        body {
+            /* 🌟 改成 black 或你想要的底色，因為現在 container 會填滿它，這會變成網頁底色 */
+            background-color: black; 
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            /* 🌟 核心修改：徹底拿掉 max-width，直接綁定 100% 寬度 */
+            width: 100%;              /* 100% 完美適應所有螢幕寬度，一丁點縫隙都不留 */
+            background-color: black;  /* 內容區塊背景色 */
+            padding: 20px;          
+            min-height: 100vh;        /* 垂直高度一樣拉滿整個螢幕 */
+            box-sizing: border-box;   /* 確保 padding 不會把 100% 寬度撐爆 */
+            text-align: center;
+            /* 因為已經填滿全螢幕了，陰影（box-shadow）用不到了，可以直接刪除 */
+        }
+
+        .video-list {
+            margin-bottom: 20px;
+        }
+
+        .video-link {
+            display: inline-block;
+            margin: 8px 0;
+            color: white;
+            text-decoration: none;
+            font-size: 40px;
+        }
+
+        .video-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 關鍵修正：預設設定 display: none 徹底隱形，沒點擊前絕不留下難看的空白 */
+        #video-container {
+            display: none; 
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        /* 偽裝成純聲音播放器：高度壓到 54px，隱藏黑底影片畫面，只漏出播放控制條 */
+        video {
+            width: 100%;
+            height: 54px;
+            background: #000;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. 用 container 把所有內容包起來，手機大小的版型才會生效 -->
+    <div class="container">
+        
+        <h2 style="color:white; font-size: 60px;">網路廣播電台</h2>
+
+        <div class="video-list">
+            <!-- 連結 1：KISS RADIO -->
+            <p><a href="#" class="video-link" data-src="https://kissradiow-hichannel.cdn.hinet.net/live/RA000040/chunklist.m3u8"><s>FM 99.9MHz 大眾廣播KISSRADIO</s></a></p>
+            <!-- 連結 2：Revma 音訊流 (修正：統一改用 data-src 讓 JS 處理，不開新分頁) -->
+            <p><a href="#" class="video-link" data-src="https://n14.rcs.revma.com/s1zttsg3qtzuv">FM 103.3MHz 中國廣播公司</a></p>
+            
+            <!-- 連結 3：警察廣播電台高雄台 -->
+            <p><a href="#" class="video-link" data-src="https://stream.pbs.gov.tw/live/KSS/playlist.m3u8">FM 93.1MHz 警察廣播電台 高雄分台</a></p>
+            <p><a href="#" class="video-link" data-src="https://stream.pbs.gov.tw:443/live/mp3:PBS/playlist.m3u8">FM 104.9Mhz 警察廣播電臺 全國治安交通網</a></p>
+            <p><a href="#" class="video-link" data-src="http://43.254.16.40:8000/KS.FM98.3">FM 98.3Mhz 港都電台</a></p>
+            <p><a href="#" class="video-link" data-src="https://stream.rcs.revma.com/pet2dvug1bkvv">FM94.3 高雄廣播電臺</a></p>
+            <p><a href="#" class="video-link" data-src="https://n03.rcs.revma.com/nkdfurztxp3vv">FM 100.7MHz  International Community Radio Taipei</a></p>
+            <p><a href="#" class="video-link" data-src="https://kathy.torontocast.com:3340/stream">asia DREAM radio J-Pop さくら　懐かしい</a></p>
+            <p><a href="#" class="video-link" data-src="https://animefm.stream.laut.fm/animefm">Anime.FM ACG動漫音樂電台</a></p>
+            <p><a href="#" class="video-link" data-src="https://antares.dribbcast.com/proxy/kpop?mp=/s">BigBRadio K-pop</a></p>
+            <p><a href="#" class="video-link" data-src="https://antares.dribbcast.com/proxy/jpop?mp=/s">BigBRadio J-pop</a></p>
+            <p><a href="#" class="video-link" data-src="https://antares.dribbcast.com/proxy/cpop?mp=/s">BigBRadio C-pop</a></p>
+            <p><a href="#" class="video-link" data-src="https://antares.dribbcast.com/proxy/apop?mp=/s">BigBRadio A-pop</a></p>
+            <p><a href="#" class="video-link" data-src="https://ottava2.out.airtime.pro/ottava2_a">OTTAVA 日本古典音樂電台</a></p>
+            <p><a href="#" class="video-link" data-src="https://usa2.fastcast4u.com/proxy/greekota?mp=/1">goradio.gr Greek Otaku Radio ACG動漫音樂電台</a></p>
+            <p><a href="#" class="video-link" data-src="https://stream.animeradio.de/animeradio.mp3">AnimeRadio.de ACG動漫音樂電台</a></p>
+            <p><a href="#" class="video-link" data-src="https://kathy.torontocast.com:3060/stream">asia DREAM radio J-Pop 可愛い</a></p>
+            <p><a href="#" class="video-link" data-src="https://quincy.torontocast.com:2070/"></a>asia DREAM radio J-Pop Sakura 懐かしい</p>
+            <p><a href="#" class="video-link" data-src="https://quincy.torontocast.com:2020/">asia DREAM radio Japan Hits</a></p>
+            <p><a href="#" class="video-link" data-src="https://kathy.torontocast.com:3560/">asia DREAM radio J-Pop Powerplay</a></p>
+            <p><a href="#" class="video-link" data-src="https://kathy.torontocast.com:3340/">asia DREAM radio J-Rock Powerplay</a></p>
+            <p><a href="#" class="video-link" data-src="https://26343.live.streamtheworld.com/SAM05AAC121.mp3">J-Idols Project Radio</a></p>
+            <p><a href="#" class="video-link" data-src="https://26343.live.streamtheworld.com/SAM10AAC139.mp3">J-Pop Project Radio</a></p>
+            <p><a href="#" class="video-link" data-src="http://gyusyabu.ddo.jp:8000/">Retro PC Game Music</a></p>
+            <p><a href="#" class="video-link" data-src=""></a></p>
+            <p><a href="#" class="video-link" data-src=""></a></p>
+
+        </div>
+
+        <!-- 2. 平常完全隱藏、不佔空間的容器 -->
+        <div id="video-container"></div>
+
+    </div>
+
+    <script>
+        let hls = null;
+
+        document.querySelectorAll('.video-link').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault(); // 阻止網頁跳轉
+                
+                const videoSrc = this.getAttribute('data-src');
+                const container = document.getElementById('video-container');
+                
+                if (hls) {
+                    hls.destroy();
+                }
+
+                // 點擊瞬間解除隱形，讓播放條顯示出來
+                container.style.display = 'block';
+
+                // 動態產生偽裝成音訊條的 video 標籤
+                container.innerHTML = `<video id="active-video" controls autoplay></video>`;
+                const video = document.getElementById('active-video');
+
+                // 判斷是否為 M3U8 格式
+                if (videoSrc.includes('m3u8')) {
+                    if (Hls.isSupported()) {
+                        // 🌟 注入跨網域破解參數，提升 Hinet 串流與警廣的播放成功率
+                        hls = new Hls({
+                            xhrSetup: function (xhr, url) {
+                                xhr.withCredentials = false; 
+                            }
+                        });
+                        hls.loadSource(videoSrc);
+                        hls.attachMedia(video);
+                        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                            video.play();
+                        });
+                    } 
+                    else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                        video.src = videoSrc;
+                        video.play();
+                    }
+                } else {
+                    // 如果是 Revma 直接音訊流，不需經過 Hls.js，直接餵給標籤播放
+                    video.src = videoSrc;
+                    video.play();
+                }
+            });
+        });
+    </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('R.js');
+  }
+</script>
+</body>
+</html>
