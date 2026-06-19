@@ -1,6 +1,0 @@
-{
-  "name": "家防導引系統",
-  "start_url": "index.html",
-  "display": "standalone",
-  "icons": [{ "src": "ico.png", "sizes": "256x256", "type": "image/png" }]
-}
